@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 export function useInventoryFilters(items = []) {
   const [searchValue, setSearchValue] = useState("");
   const [sortBy, setSortBy] = useState("created_desc");
-  // "created_desc", "created_asc", "name_asc", "qty_desc"
+  // "created_desc", "created_asc", "name_asc", "serial_asc"
 
   const filteredAndSortedItems = useMemo(() => {
     const normalizedSearch = searchValue.trim().toLowerCase();
@@ -16,12 +16,16 @@ export function useInventoryFilters(items = []) {
       const category = item.category?.toLowerCase() || "";
       const location = item.location?.toLowerCase() || "";
       const notes = item.notes?.toLowerCase() || "";
+      const supplier = item.supplier?.toLowerCase() || "";
+      const serial = item.serial_number?.toLowerCase() || "";
 
       return (
         name.includes(normalizedSearch) ||
         category.includes(normalizedSearch) ||
         location.includes(normalizedSearch) ||
-        notes.includes(normalizedSearch)
+        notes.includes(normalizedSearch) ||
+        supplier.includes(normalizedSearch) ||
+        serial.includes(normalizedSearch)
       );
     });
 
@@ -34,8 +38,8 @@ export function useInventoryFilters(items = []) {
         case "name_asc":
           return a.name.localeCompare(b.name);
 
-        case "qty_desc":
-          return (b.quantity ?? 0) - (a.quantity ?? 0);
+        case "serial_asc":
+          return (a.serial_number || "").localeCompare(b.serial_number || "");
 
         case "created_desc":
         default:

@@ -1,6 +1,16 @@
 import { HiX } from "react-icons/hi";
 import Button from "./Button";
 
+const CATEGORY_OPTIONS = [
+  "Laptop",
+  "Desktop",
+  "Monitor",
+  "Router",
+  "Switch",
+  "Printer",
+  "IP Camera",
+];
+
 // src/components/ui/AddItemModal.jsx
 export default function AddItemModal({
   mode = "create", // "create" | 'edit'
@@ -48,58 +58,74 @@ export default function AddItemModal({
             )}
           </div>
 
-          {/* Category + Quantity */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <label className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                Category
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Computer, Cable"
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#f24a2f]/60"
-                {...register("category", { required: "Category is required" })}
-              />
-              {errors.category && (
-                <p className="text-[11px] text-red-500">
-                  {errors.category.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                Quantity
-              </label>
-              <input
-                type="number"
-                min={1}
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#f24a2f]/60"
-                {...register("quantity", {
-                  required: "Quantity is required",
-                  valueAsNumber: true,
-                  min: { value: 1, message: "Must be at least 1" },
-                })}
-              />
-              {errors.quantity && (
-                <p className="text-[11px] text-red-500">
-                  {errors.quantity.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Location */}
+          {/* Serial number */}
           <div className="space-y-1">
             <label className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
-              Location (optional)
+              Serial number
             </label>
             <input
               type="text"
-              placeholder="e.g. Office shelf A"
+              placeholder="e.g. SN-123456"
               className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#f24a2f]/60"
-              {...register("location")}
+              {...register("serialNumber", {
+                required: "Serial number is required",
+              })}
             />
+            {errors.serialNumber && (
+              <p className="text-[11px] text-red-500">
+                {errors.serialNumber.message}
+              </p>
+            )}
+          </div>
+
+          {/* Category */}
+          <div className="space-y-1">
+            <label className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
+              Category
+            </label>
+            <select
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#f24a2f]/60"
+              {...register("category", { required: "Category is required" })}
+            >
+              <option value="">Select category…</option>
+              {CATEGORY_OPTIONS.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+            {errors.category && (
+              <p className="text-[11px] text-red-500">
+                {errors.category.message}
+              </p>
+            )}
+          </div>
+
+          {/* Supplier + Location */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <label className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                Supplier (optional)
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. ABC Computers"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#f24a2f]/60"
+                {...register("supplier")}
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                Location (optional)
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Office shelf A"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#f24a2f]/60"
+                {...register("location")}
+              />
+            </div>
           </div>
 
           {/* Status */}

@@ -23,7 +23,7 @@ export function useInventoryItems() {
       const { data, error } = await fetchInventoryItems();
 
       if (error) {
-        throw new Error(error.message || "Faield to laod inventory");
+        throw new Error(error.message || "Failed to laod inventory");
       }
 
       return data ?? [];

@@ -29,8 +29,9 @@ export default function InventoryTable({
             <tr className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
               <th className="text-left px-6 py-3">Added</th>
               <th className="text-left px-6 py-3">Item</th>
-              <th className="text-left px-6 py-3">Qty</th>
+              <th className="text-left px-6 py-3">Serial</th>
               <th className="text-left px-6 py-3">Category / Status</th>
+              <th className="text-left px-6 py-3">Supplier</th>
               <th className="text-left px-6 py-3">Notes</th>
               <th className="text-right px-6 py-3">Actions</th>
             </tr>
@@ -56,10 +57,10 @@ export default function InventoryTable({
                   </span>
                 </td>
 
-                {/* Quantity */}
+                {/* Serial */}
                 <td className="px-6 py-3 align-middle whitespace-nowrap">
                   <span className="text-slate-600 dark:text-slate-300 text-xs">
-                    {item.quantity}
+                    {item.serial_number}
                   </span>
                 </td>
 
@@ -73,6 +74,13 @@ export default function InventoryTable({
                       {formatStatus(item.status)}
                     </Badge>
                   </div>
+                </td>
+
+                {/* Supplier */}
+                <td className="px-6 py-3 align-middle">
+                  <span className="text-slate-500 dark:text-slate-400 text-xs">
+                    {item.supplier || "—"}
+                  </span>
                 </td>
 
                 {/* Notes */}

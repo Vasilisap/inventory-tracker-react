@@ -57,7 +57,7 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="you@example.com"
-              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#EE6338]"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-slate-50 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#EE6338]"
               {...register("email", { required: "Email is required" })}
             />
             {errors.email && (
@@ -73,7 +73,7 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="••••••••"
-              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#EE6338]"
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-slate-50 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#EE6338]"
               {...register("password", { required: "Password is required" })}
             />
             {errors.password && (

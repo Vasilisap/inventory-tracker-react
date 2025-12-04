@@ -40,8 +40,7 @@ export default function DashboardPage() {
 
   // Simple stats
   const totalItems = items?.length ?? 0;
-  const totalQuantity =
-    items?.reduce((sum, item) => sum + (item.quantity ?? 0), 0) ?? 0;
+
   const inUseCount =
     items?.filter((item) => item.status === "in_use").length ?? 0;
 
@@ -54,7 +53,8 @@ export default function DashboardPage() {
     defaultValues: {
       name: "",
       category: "",
-      quantity: 1,
+      serialNumber: "",
+      supplier: "",
       location: "",
       status: "available",
       notes: "",
@@ -67,7 +67,8 @@ export default function DashboardPage() {
     reset({
       name: "",
       category: "",
-      quantity: 1,
+      serialNumber: "",
+      supplier: "",
       location: "",
       status: "available",
       notes: "",
@@ -82,7 +83,8 @@ export default function DashboardPage() {
     reset({
       name: item.name ?? "",
       category: item.category ?? "",
-      quantity: item.quantity ?? 1,
+      serialNumber: item.serial_number ?? "",
+      supplier: item.supplier ?? "",
       location: item.location ?? "",
       status: item.status ?? "available",
       notes: item.notes ?? "",
@@ -98,8 +100,13 @@ export default function DashboardPage() {
 
   function onSubmit(values) {
     const payload = {
-      ...values,
-      quantity: Number(values.quantity) || 1,
+      name: values.name,
+      category: values.category,
+      serial_number: values.serialNumber,
+      supplier: values.supplier || null,
+      location: values.location || null,
+      status: values.status,
+      notes: values.notes || null,
     };
 
     if (modalMode === "create") {
@@ -175,7 +182,7 @@ export default function DashboardPage() {
 
         {/* Stats row */}
         {!isLoading && !isError && items && items.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
             {/* Total items */}
             <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 px-4 py-3 flex flex-col gap-1">
               <span className="text-[11px] uppercase tracking-wide text-slate-400">
@@ -186,19 +193,6 @@ export default function DashboardPage() {
               </span>
               <span className="text-[11px] text-slate-500 dark:text-slate-400">
                 Unique inventory records
-              </span>
-            </div>
-
-            {/* Total quantity */}
-            <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 px-4 py-3 flex flex-col gap-1">
-              <span className="text-[11px] uppercase tracking-wide text-slate-400">
-                Total quantity
-              </span>
-              <span className="text-xl font-semibold text-slate-900 dark:text-slate-50">
-                {totalQuantity}
-              </span>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                Sum of all item units
               </span>
             </div>
 
@@ -259,7 +253,7 @@ export default function DashboardPage() {
                   placeholder="Search items..."
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  className="w-full sm:max-w-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#EE6338]"
+                  className="w-full sm:max-w-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-slate-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#EE6338]"
                 />
 
                 {/* Sort */}
@@ -268,12 +262,12 @@ export default function DashboardPage() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-[11px] outline-none focus:ring-2 focus:ring-[#f24a2f]/60"
+                    className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-[11px] outline-none focus:ring-2 focus:ring-[#EE6338]"
                   >
                     <option value="created_desc">Newest first</option>
                     <option value="created_asc">Oldest first</option>
                     <option value="name_asc">Name A–Z</option>
-                    <option value="qty_desc">Quantity (high → low)</option>
+                    <option value="serial_asc">Serial A–Z</option>
                   </select>
                 </div>
               </div>
